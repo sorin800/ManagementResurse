@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+        <title>Politici In Sisteme Distribuite</title>
+        <link rel="stylesheet" href="/css/main.css" />
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <!-- Bootstrap core CSS -->
+	<link rel="stylesheet"
+		href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+		integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+		crossorigin="anonymous">
+    </head>
+    <body>
+    <div class="container">
+
+        <noscript>
+            <h2>Sorry! Your browser doesn't support Javascript</h2>
+        </noscript>
+					   
+        <div id= "mainDiv" class="upload-container">
+         <form method="POST" th:action="@{/logoutUser}">
+				<button class="nav-link"><i class="fa fa-sign-out-alt" aria-hidden="true"></i> Sign Out</button>
+		</form>
+            <div class="upload-header">
+                <h2>Politici In Sisteme Distribuite</h2>
+            </div>
+            <div class="upload-content">
+                <div class="single-upload">
+                    <h3>Upload Single File</h3>
+                    <form id="singleUploadForm" name="singleUploadForm">
+                        <input id="singleFileUploadInput" type="file" name="file" class="file-input" required />
+                        <input id="textUploadPath" type="text" name="text" class="text-input" required />
+                        <button type="submit" class="primary submit-btn">Submit</button>
+                    </form>
+                    <br/>
+                    <h3>Files that you have access to:</h3>
+                    <div class="row" th:each="file : ${fileNames}">
+                    	<a th:href="@{|http://localhost:8080/downloadFile/${file}|}" >
+                    		<span th:text="${file}"></span>
+                    	</a>  
+                    </div>
+                    <div class="upload-response">
+                        <div id="singleFileUploadError"></div>
+                        <div id="singleFileUploadSuccess"></div>
+                    </div>
+                     <h3>Give access to your resources to other users :</h3>
+                     <form id="form">
+                     <div class="row">
+	                     	<div class="col-4">
+	                     		<div class="form-group" >
+					                <label>Username:</label>
+									<select required class="form-control" name="from" id="form1">
+									  <option  value=""></option>
+									  <option th:each="user: ${usernames}" th:value="${user}" th:text="${user}"></option>
+									</select>
+				        		</div>
+	                     	</div>
+	                     	<div class="col-4">
+	                     		<div class="form-group" >
+					                <label>File Name:</label>
+									<select required class="form-control" name="from" id="form2" >
+									  <option value=""></option>
+									  <option th:each="item: ${listOfDirectoriesAndFiles}" th:value="${item}" th:text="${item}"></option>
+									</select>
+				        		</div>
+	                     	</div>
+	                     	<div class="col-4" >
+	                     		<div class="form-group">
+					                <label>Role:</label>
+									<select required class="form-control" name="from" id="form3" >
+									  <option value=""></option>
+									  <option>R</option>
+									  <option>RW</option>
+									  <option>RD</option>
+									  <option>RWD</option>
+									</select>
+				        		</div>
+				        		<input id = "givePermission" class="btn btn-primary btn-lg" type="submit" value="Give Permission" />
+	                     	</div>
+                     </div>
+                    </form>
+                </div>
+                <div class="multiple-upload">
+                    <!--<h3>Upload Multiple Files</h3>-->
+                    <!--<form id="multipleUploadForm" name="multipleUploadForm">-->
+                        <!--<input id="multipleFileUploadInput" type="file" name="files" class="file-input" multiple required />-->
+                        <!--<button type="submit" class="primary submit-btn">Submit</button>-->
+                    <!--</form>-->
+                    <!--<div class="upload-response">-->
+                        <!--<div id="multipleFileUploadError"></div>-->
+                        <!--<div id="multipleFileUploadSuccess"></div>-->
+                    <!--</div>-->
+                    <h3>Perform Action :</h3>
+                    <form id="performAction">
+                        <div class="row">
+                            <div class="col-4">
+                                <div class="form-group" >
+                                    <label>File:</label>
+                                    <select required class="form-control" name="from" id="fileName">
+                                        <option  value=""></option>
+                                        <option th:each="item: ${fileNames}" th:value="${item}" th:text="${item}"></option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-4" >
+                                <div class="form-group">
+                                    <label>Action:</label>
+                                    <select required class="form-control" name="from" id="action" >
+                                        <option value=""></option>
+                                        <option>R</option>
+                                        <option>W</option>
+                                        <option>D</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <input id = "performActionButton" class="col-4 btn btn-primary btn-lg" type="submit" value="Perform Action" />
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+      </div>
+        <script src="/js/main.js" ></script>
+        <script src="/js/permission.js" ></script>
+        <script src="/js/performAction.js" ></script>
+    </body>
+</html>
